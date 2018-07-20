@@ -13,6 +13,7 @@ public function index(){
 $param = 'Home';
 $produk = $this->db->get_where('data_produk',array('kategori'=>$param));
 $this->load->view('umum/V_header_toko');
+$this->load->view('Store/V_banner');
 $this->load->view('Store/V_kategori',['produk'=>$produk]);
 $this->load->view('umum/V_footer_toko');
 

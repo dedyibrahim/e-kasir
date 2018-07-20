@@ -6,6 +6,7 @@ class P_toko extends CI_Controller{
 $this->load->helper('url');
 $this->load->database();
 $this->load->helper('download');
+$this->load->helper('form');
 $this->load->library('session');
 $this->load->library('datatables');
 if(!$this->session->userdata('email') && !$this->session->userdata('username') && !$this->session->userdata('level') ){
@@ -39,7 +40,7 @@ echo "
 <th>Nama</th>
 <th>Aksi</th>
 </tr>";
-$i =0;
+$i =1;
 foreach ($data->result_array() as $menu){
     echo "<tr>"
        . "<td>".$i++."</td>"
@@ -94,6 +95,59 @@ if($this->input->post('kategori')){
 $this->db->update('data_produk',$data,array('id_produk'=>$this->input->post('id_produk')));
 
 }
+}
+public function banner_toko(){
+$this->load->view('umum/V_header');
+$this->load->view('P_toko/V_banner_toko');
+$this->load->view('umum/V_footer');
+    
+}
+public function simpan_banner(){
+$config['upload_path']          = './uploads/banner/';
+$config['allowed_types']        = 'gif|jpg|png';
+$config['encrypt_name']        = TRUE;
+
+$this->load->library('upload', $config);
+
+if ( ! $this->upload->do_upload('banner'))
+{
+echo print_r($this->upload->display_errors());
+}
+else
+{
+$data = array(
+'nama_banner' =>$this->upload->data('file_name'),
+);
+$this->db->insert('banner',$data);
+    
+redirect('P_toko/banner_toko');
+}
+
+}
+public function data_banner(){
+    
+$data = $this->db->get('banner');
+    
+    
+echo "
+<table style='width:100%;' class='table-condensed table-bordered table-hover table-striped'>
+<tr>
+<th>No</th>
+<th>Gambar banner</th>
+<th>Aksi</th>
+</tr>";
+$i =1;
+foreach ($data->result_array() as $banner){
+    echo "<tr>"
+       . "<td>".$i++."</td>"
+       . "<td><img style='width:auto; height:100px;' src='".base_url("/uploads/banner/".$banner['nama_banner'])."'></td>"
+       ." <td> <button onclick='hapus_menu(".$banner['id_banner'].");' class='btn btn-danger'><span class='fa fa-close'></span></button> </td></td></tr>";
+    
+}
+
+echo "</table>";
+
+
 }
 
 }

@@ -1,7 +1,4 @@
-<div class=" container banner_toko" style="margin-top:8%;">
-    <h1>HALO BANNER</h1>
-    
-</div>
+
 
 <div class="container">
 <?php foreach ($produk->result_array() as  $produk) { ?>

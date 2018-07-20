@@ -23,16 +23,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="hidden-xs">    
 <a class="navbar-brand_toko" href="<?php echo base_url(); ?>">E-Toko <span class="fa fa-shopping-basket"></span></a>
 </div>
-<div class="search_header col-md-7 col-sm-7 col-xs-7">
+<div class="search_header col-md-7 ">
 <input type="text" class="form-search" placeholder="Cari produk ...">    
 </div>
 <div class="pull-right">
 
-<a href="#"><div class="popover-show-cart navbar-brand_menu" title="Keranjang belanja"
+<a href="#"><div class="popover-show-cart navbar-brand_menu hidden-xs hidden-sm " title="Keranjang belanja"
 data-container="body" data-toggle="popover" data-placement="bottom"
 data-content="Some content in Popover on bottom"><span class="fa fa-shopping-basket"></span></div></a>
 
-<a href="#"><div class="popover-show-user navbar-brand_menu" title="Akun"
+<a href="#"><div class="popover-show-user navbar-brand_menu hidden-xs hidden-sm" title="Akun"
 data-container="body" data-toggle="popover" data-placement="bottom"
 data-content="
 <label>Email :</label>
@@ -48,7 +48,7 @@ data-content="
 
 "><span class="fa fa-user"></span></div></a>
 
-<a href="#"><div class="popover-show-list navbar-brand_menu" title="Menu"
+<a href="#"><div class="popover-show-list navbar-brand_menu hidden-xs hidden-sm" title="Menu"
 data-container="body" data-toggle="popover" data-placement="bottom"
 data-content="Some content in Popover on bottom"><span class="fa fa-list-alt"></span></div></a>
 
