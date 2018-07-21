@@ -12,8 +12,9 @@ $this->load->library('session');
 public function index(){
 $param = 'Home';
 $produk = $this->db->get_where('data_produk',array('kategori'=>$param));
+$banner = $this->db->get('banner');
 $this->load->view('umum/V_header_toko');
-$this->load->view('Store/V_banner');
+$this->load->view('Store/V_banner',['banner'=>$banner]);
 $this->load->view('Store/V_kategori',['produk'=>$produk]);
 $this->load->view('umum/V_footer_toko');
 
@@ -36,9 +37,15 @@ $this->load->view('umum/V_footer_toko');
 }
 }
 public function lihat_produk(){
+
+$param = base64_decode($this->uri->segment(3));
+$produk = $this->db->get_where('data_produk',array('id_produk'=>$param));    
+
+
 $this->load->view('umum/V_header_toko');
-$this->load->view('Store/V_lihat_produk');
+$this->load->view('Store/V_lihat_produk',['produk'=>$produk]);
 $this->load->view('umum/V_footer_toko');
+
 }
 
 
