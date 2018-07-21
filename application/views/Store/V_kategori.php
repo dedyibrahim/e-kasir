@@ -1,8 +1,9 @@
 
 
-<div class="container">
+<div class="container" style="background-color:#fff;   " >
 <?php foreach ($produk->result_array() as  $produk) { ?>
-<a href="<?php echo base_url('Toko/lihat_produk/'.base64_encode($produk['id_produk']));?>">
+   
+    <a href="<?php echo base_url('Toko/lihat_produk/'.base64_encode($produk['id_produk']));?>">
     <div style="height:45%; " class="col-md-3">
 <div style="margin:10px;  text-align:center;">
 
@@ -22,7 +23,8 @@
 </div>
 </div>
 </a>
+       
 <?php } ?>
-
+   
 
 </div>

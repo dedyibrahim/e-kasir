@@ -4,7 +4,7 @@
  img { max-width: 100%; }
  .cycle-slideshow {
   width: 100%;
-  max-width: 960px;
+  max-width: 100%;
   display: block;
   position:static;
   margin: 20px auto;
@@ -48,12 +48,12 @@
  .cycle-pager-active { background-color: #fff; }
 </style>
 
-<div class="cycle-slideshow"  style="margin-top:8%; border:3px solid #169F85; ">
-    <span class="cycle-prev">&blacktriangleleft;</span> 
- <span class="cycle-next">&blacktriangleright;</span> 
+<div class="cycle-slideshow"  style="margin-top:7%;">
+    <span class="cycle-prev"><span class="fa_toko fa-arrow-circle-left"></span></span> 
+ <span class="cycle-next"><span class="fa_toko fa-arrow-circle-right"></span></span> 
  <span class="cycle-pager"></span>  
 <?php foreach ($banner->result_array() as $gambar){ ?>
- <img style="width:100%; height:350px; " src="<?php echo base_url('uploads/banner/'.$gambar['nama_banner']) ?>" alt="Gambar Pertama">
+ <img style="width:100%; height:400px; " src="<?php echo base_url('uploads/banner/'.$gambar['nama_banner']) ?>" alt="Gambar Pertama">
 <?php } ?>
 
 </div>

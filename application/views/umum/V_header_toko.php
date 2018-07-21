@@ -16,12 +16,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <link href="<?php echo base_url() ?>assets/sweetalert/sweetalert.css" rel="stylesheet" type="text/css"/>
 
 </head>
+
 <body style="background-image: url('<?php echo base_url()?>assets/gambar/bg.gif');">
-<div class="loading" id="loading" style="display: none;"><div></div><div></div><div></div><div></div></div>
+<div class="loading" id="loading" ><div></div><div></div><div></div><div></div></div>
 <nav id="myScrollspy" class="navbar-default navbar-fixed-top  background_header_toko"role="navigation" style="height:60px; ">
 <div class="container">         
 <div class="hidden-xs">    
-<a class="navbar-brand_toko" href="<?php echo base_url(); ?>">E-Toko <span class="fa fa-shopping-basket"></span></a>
+<a class="navbar-brand_toko" href="<?php echo base_url(); ?>">E-Toko <span class="fa_toko fa-shopping-basket"></span></a>
 </div>
 <div class="search_header col-md-7 ">
 <input type="text" class="form-search" placeholder="Cari produk ...">    
@@ -30,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <a href="#"><div class="popover-show-cart navbar-brand_menu hidden-xs hidden-sm " title="Keranjang belanja"
 data-container="body" data-toggle="popover" data-placement="bottom"
-data-content="Some content in Popover on bottom"><span class="fa fa-shopping-basket"></span></div></a>
+data-content="Some content in Popover on bottom"><span class="fa_toko fa-shopping-basket"></span></div></a>
 
 <a href="#"><div class="popover-show-user navbar-brand_menu hidden-xs hidden-sm" title="Akun"
 data-container="body" data-toggle="popover" data-placement="bottom"
@@ -46,11 +47,11 @@ data-content="
 <h4 align='center'><a href='<?php echo base_url('Toko/daftar_customer') ?>'>Belum punnya akun ?</a> </h4>
 
 
-"><span class="fa fa-user"></span></div></a>
+"><span class="fa_toko fa-user"></span></div></a>
 
 <a href="#"><div class="popover-show-list navbar-brand_menu hidden-xs hidden-sm" title="Menu"
 data-container="body" data-toggle="popover" data-placement="bottom"
-data-content="Some content in Popover on bottom"><span class="fa fa-list-alt"></span></div></a>
+data-content="Some content in Popover on bottom"><span class="fa_toko fa-list-alt"></span></div></a>
 
 
 
