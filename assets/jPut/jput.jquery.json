@@ -1,0 +1,35 @@
+{
+    "name": "jput",
+    "title": "jPut JSON to HTML",
+    "description": "jPut is a small jQuey plugin where you can append your JSON to customized HTML format easily. You can also dynamically bind values to your existing data easily. Its simple and fast. The jPut can call by usind data attributes. jPut also supports JSONP.",
+    "keywords": [
+        "jput",
+        "json",
+        "jsonp",
+        "ui",
+		"ajax",
+        "render",
+        "multidimensional",
+        "jsonrender",
+        "databinding"
+    ],
+    "version": "2.0.0",
+    "author": {
+        "name": "Shabeer Ali M",
+		"email": "shabeer@jput.org",
+        "url": "https://github.com/shabeer-ali-m"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "http://opensource.org/licenses/MIT"
+        }
+    ],
+    "bugs": "https://github.com/shabeer-ali-m/jput/issues",
+    "homepage": "https://github.com/shabeer-ali-m/jput/",
+    "docs": "https://github.com/shabeer-ali-m/jput",
+    "download": "https://github.com/shabeer-ali-m/jput",
+    "dependencies": {
+        "jquery": ">=1.7.0"
+    }
+}
