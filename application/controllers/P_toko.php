@@ -149,6 +149,32 @@ echo "</table>";
 
 
 }
+ public function set_api_ongkir(){
+$this->load->view('umum/V_header');
+$this->load->view('P_toko/V_ongkir');
+$this->load->view('umum/V_footer');
+
+ }
+ public function simpan_api_ongkir(){
+     
+   if($this->input->post('api_ongkir')){
+       
+       $data = array(
+           'api_key' => $this->input->post('api_ongkir'),
+       );
+       
+       $this->db->update('api_raja_ongkir',$data,array('id_api'=>'1'));
+       
+   }
+ }
+
+ public function tampil_api(){
+
+  $data = $this->db->get('api_raja_ongkir')->row_array();
+
+  echo "<h3>".$data['api_key']."</H3>";
+ }
+
 
 }
 

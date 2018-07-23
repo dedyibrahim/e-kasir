@@ -1,6 +1,6 @@
 
 
-<div class="container" style="background-color:#fff;  margin-top:8%;   " >
+<div class="container" style="background-color:#fff;   " >
 <?php foreach ($produk->result_array() as  $produk) { ?>
    
     <a href="<?php echo base_url('Toko/lihat_produk/'.base64_encode($produk['id_produk']));?>">

@@ -5,6 +5,7 @@
 <a href="<?php  echo base_url('P_toko/banner_toko')?>"><button class=" btn btn-success">Banner Toko <span class=" fa fa-paperclip "></span></button></a>
 <a href=""><button class=" btn btn-success">Pengaturan Toko <span class=" fa fa-gear"></span></button></a>
 <a href="<?php  echo base_url('P_toko/set_produk_toko')?>"><button class=" btn btn-success">Set Produk toko <span class=" fa fa-list-alt"></span></button></a>
+<a href="<?php  echo base_url('P_toko/set_api_ongkir')?>"><button class=" btn btn-success">Pengaturan ongkir <span class=" fa fa-truck"></span></button></a>
 <div class="clearfix"></div>
 <hr>
 

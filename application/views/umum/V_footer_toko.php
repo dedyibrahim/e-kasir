@@ -1,27 +1,26 @@
-<div class="container" style="padding: 100px 50px 10px;" >
- </div>
+
 <script type="text/javascript">
 $(document).ready(function(){
 $('.popover-show-cart').popover({html:true,trigger:"click"});
 $('.popover-show-cart').on('click', function (e) {
-    $('.popover-show-user').not(this).popover('hide');
-    $('.popover-show-list').not(this).popover('hide');
-    
+$('.popover-show-user').not(this).popover('hide');
+$('.popover-show-list').not(this).popover('hide');
+
 });     
 
 $('.popover-show-user').popover({html:true,trigger:"click"});
 $('.popover-show-user').on('click', function (e) {
-    $('.popover-show-cart').not(this).popover('hide');
-    $('.popover-show-list').not(this).popover('hide');
-    
+$('.popover-show-cart').not(this).popover('hide');
+$('.popover-show-list').not(this).popover('hide');
+
 });     
 
 
 $('.popover-show-list').popover({html:true,trigger:"click" });
 $('.popover-show-list').on('click', function (e) {
-    $('.popover-show-cart').not(this).popover('hide');
-    $('.popover-show-user').not(this).popover('hide');
-    
+$('.popover-show-cart').not(this).popover('hide');
+$('.popover-show-user').not(this).popover('hide');
+
 });     
 
 
@@ -29,13 +28,14 @@ $('.popover-show-list').on('click', function (e) {
 });    
 
 
- </script>
-<nav class="navbar navbar-default navbar-bottom " role="navigation" style="background-color:#169F85; ">
+</script>
+</div> 
+<nav class="navbar navbar-default navbar-bottom" role="navigation" style="background-color:#169F85; margin-top:8%;  ">
 <div class="container">
 <div class="navbar-header">
 <a class="navbar-brand" href="<?php echo base_url(); ?>"><span class="fa fa-copyright"></span> E-Toko <span class="fa fa-shopping-basket"></span> 2018 </a>
 </div>
-<div>
+
 
 <div class="navbar-brand pull-right hidden-xs hidden-sm">
 Kecepatan server <strong>{elapsed_time}</strong> seconds

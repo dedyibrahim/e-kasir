@@ -25,13 +25,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <a class="navbar-brand_toko" href="<?php echo base_url(); ?>">E-Toko <span class="fa_toko fa-shopping-basket"></span></a>
 </div>
 <div class="search_header col-md-7 ">
-<input type="text" class="form-search" placeholder="Cari produk ...">    
+<input id="cari" type="text" class="form-search" placeholder="Cari produk ...">    
 </div>
 <div class="pull-right">
 
-<a href="#"><div class="popover-show-cart navbar-brand_menu hidden-xs hidden-sm " title="Keranjang belanja"
+<a href="#"><div  id="keranjang_header" class="popover-show-cart navbar-brand_menu hidden-xs hidden-sm " title="Keranjang belanja"
 data-container="body" data-toggle="popover" data-placement="bottom"
-data-content="Some content in Popover on bottom"><span class="fa_toko fa-shopping-basket"></span></div></a>
+data-content="
+<div id='keranjang'></div>
+
+<a href='<?php echo base_url('Toko/lihat_keranjang') ?>'><buttton class='btn btn-success'>Lihat keranjang <span class='fa fa-eye'></span></button></a>
+<a href='<?php echo base_url('Toko/checkout') ?>'><buttton class='btn btn-success'>Bayar <span class='fa fa-money'></span></button></a><hr>
+"
+
+><span class="fa_toko fa-shopping-basket"></span></div></a>
 
 <a href="#"><div class="popover-show-user navbar-brand_menu hidden-xs hidden-sm" title="Akun"
 data-container="body" data-toggle="popover" data-placement="bottom"
@@ -57,7 +64,7 @@ data-content="Some content in Popover on bottom"><span class="fa_toko fa-list-al
 
 </div>
 </div>
-    <div id="fixed" class="normal" style="display:block;">	
+<div id="fixed" class="normal" style="display:block;">	
 
 <div class="container-fluid"  style="background-color:#45cea2; height:35px;">
 <div class="container">
@@ -73,6 +80,13 @@ data-content="Some content in Popover on bottom"><span class="fa_toko fa-list-al
 </div>    
 </nav>
 <script type="text/javascript">
+$( document ).ajaxStart(function() {
+$( "#loading" ).show();
+});
+$( document ).ajaxComplete(function() {
+$( "#loading" ).hide();
+});   
+
 $(function(){
 var menu = $('#fixed'),
 pos = menu.offset();
@@ -89,7 +103,59 @@ $(this).removeClass('fixed').addClass('normal').fadeIn('fast');
 }
 });
 
-}); </script>
+}); 
+
+$("#keranjang_header").click(function(){
+
+$.ajax({
+
+type:"GET",
+url:"<?php echo base_url('Toko/keranjang_header') ?>",
+data:"",
+success:function(data){
+
+$("#keranjang").html(data); 
+}
+
+});
+
+});
+
+
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+$("#cari").keyup(function(){
+var kata_kunci = $("#cari").val();
+$.ajax({
+type:"POST",
+url:"<?php echo base_url('Toko/search') ?>",
+data:"kata_kunci="+kata_kunci,
+success:function(data){
+if (kata_kunci != ''){
+$("#hasil_cari").show();
+$("#hasil_cari").html(data);
+$("#isi").hide();
+}else{
+$("#hasil_cari").hide();
+$("#isi").show();
+
+}    
+
+}
+});    
+
+
+});
+
+
+}); 
+
+
+
+</script>    
+
 <style>
 .fixed {
 margin: 0px auto;
@@ -103,3 +169,6 @@ width: 100%;
 
 }
 </style>
+<div class="container" id="hasil_cari" style="background-color:#fff; margin-top:8%; display: none;"></div>
+
+<div id="isi">

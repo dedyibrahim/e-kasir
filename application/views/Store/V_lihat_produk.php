@@ -1,3 +1,4 @@
+<body onload="ambil_data_kota();"></body>
 
 <div class="container" style="margin-top:8%; margin-bottom:3%; background-color:#fff;   ">
 <?php $data = $produk->row_array();?>
@@ -43,7 +44,7 @@
 
 <?php } ?>
 </div>
-    
+
 <div class="item">
 <?php if(!file_exists("./uploads/produk/".$data['gambar3'])){ ?>
 
@@ -56,7 +57,7 @@
 
 <?php } ?>
 </div>    
-    
+
 
 </div>
 </div>
@@ -81,7 +82,7 @@
 <div class="clearfix"></div>
 <hr>
 
-<div class="category-tab shop-details-tab col-sm-12"><!--category-tab-->
+<div class="category-tab shop-details-tab col-sm-12">
 <div class="col-sm-12">
 <ul class="nav nav-tabs">
 <li class=""><a href="#details" data-toggle="tab">Detail Produk</a></li>
@@ -92,59 +93,60 @@
 </div>
 
 <div class="tab-content">
-
 <div class="tab-pane  fade" id="details">
 <?php echo $data['deskripsi'] ?>	
 </div>
 
 <div class="tab-pane fade active in" id="ongkos">
 <div class="col-md-6">
-<h4 align="center"><b>CEK ONGKOS KIRIM</b></h4>                                
-<label>Pilih provinsi</label>                                   
+<h4 align="center">Cek Ongkos Kirim</h4>                                
+<label>Pilih Kota Tujuan</label>                                   
+<select id="data_kota" class="form-control"> 
 </select>
-<label>Pilih Kota</label>                                   
-<select id="kota_tujuan" class="form-control"> 
-</select>
+
 <label>Qty Produk :</label>
 <input type="text" id="qty_est" value="1" class="form-control">    
+<input type="hidden" id="berat_produk" value="<?php echo $data ['berat'] ?>" class="form-control">    
 <label>Pilih Kurir :</label>
-<select id="kurir" onclick="load_data_cost()" class="form-control">
+<select id="kurir" onchange="load_data_pengiriman();" class="form-control">
+<option></option>
 <option name="jne" value="jne">JNE</option>
-<option name="jne" value="tiki">TIKI</option>
-<option name="jne" value="pos">POS</option>
+<option name="tiki" value="tiki">TIKI</option>
+<option name="pos" value="pos">POS</option>
 </select>
 </div>
 <div class="col-md-6">    
-<h3><div id="data_cost"></div></h3>                                
+<div id="data_cost"></div>                                
 </div>
 </div>
+
 <div class="tab-pane fade" id="pertanyaan">
 <h1>PERTANYAAN</h1>	
 </div>
 <div class="tab-pane fade" id="reviews">
 <h1>ULASAN</h1>	
 </div>
+
+
 </div>
 </div>
 <div class="clearfix"></div>
 <hr>
 </div>
+
+
 <script type="text/javascript">
 $(document).ready(function(){
-    
-    $("#tambah_keranjang").click(function(){
-    var qty = $("#qty").val();
-    var id_produk = $("#id_produk").val();
-     $.ajax({
-         
-         type:"POST",
-         url:"<?php echo base_url('Toko/tambahkan_keranjang') ?>",
-         data:"qty="+qty+"&id_produk="+id_produk,
-        success:function(data){
-            
-    if(data == 'habis'){
-   
-   swal({
+$("#tambah_keranjang").click(function(){
+var qty = $("#qty").val();
+var id_produk = $("#id_produk").val();
+$.ajax({
+type:"POST",
+url:"<?php echo base_url('Toko/tambahkan_keranjang') ?>",
+data:"qty="+qty+"&id_produk="+id_produk,
+success:function(data){
+if(data == 'habis'){
+swal({
 title:"", 
 text:"Maaf stok sudah habis",
 timer:1500,
@@ -152,9 +154,8 @@ type:"error",
 showCancelButton :false,
 showConfirmButton :false
 });
-    }else if(data == 'stok_kurang'){
-        
-        swal({
+}else if(data == 'stok_kurang'){
+swal({
 title:"", 
 text:"Maaf stok tidak mencukupi",
 timer:1500,
@@ -162,10 +163,10 @@ type:"warning",
 showCancelButton :false,
 showConfirmButton :false
 });
-        
-    }else{
-        
-        swal({
+
+}else{
+
+swal({
 title:"", 
 text:"Berhasil",
 timer:1500,
@@ -173,15 +174,46 @@ type:"success",
 showCancelButton :false,
 showConfirmButton :false
 });
-    }       
+}       
+
+} 
+
+}); 
+
+});
+
+});
+
+function ambil_data_kota(){
+$.ajax({
+type:"POST",
+url :"<?php echo base_url('Toko/ambil_kota_ongkir') ?>",
+data:"",
+success:function(data){
+$("#data_kota").html(data);
+}
+});
+}
+
+function load_data_pengiriman(){
+var kota  = $("#data_kota").val();
+var qty   = $("#qty_est").val();
+var kurir = $("#kurir").val();
+var berat = $("#qty_est").val()*$("#berat_produk").val();
+
+$.ajax({
+    type:"POST",
+    url:"<?php echo base_url('Toko/load_data_cost') ?>",
+    data:"kota_tujuan="+kota+"&qty="+qty+"&berat="+berat+"&kurir="+kurir,
+    success:function(data){
+        
+
+        $("#data_cost").html(data);
+    }
     
-    } 
-         
-     }); 
-     
-    });
     
 });
 
 
+}
 </script>    
