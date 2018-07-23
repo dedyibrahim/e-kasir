@@ -5,6 +5,7 @@ public function __construct() {
 parent::__construct();
 $this->load->helper('url');
 $this->load->database();
+$this->load->library('email');
 $this->load->library('session');
 $this->load->library('cart');
 }
@@ -228,28 +229,25 @@ echo "<option value=".$berhasil['city_id'].">".$berhasil['city_name']."</option>
 }    
 }
 public function load_data_cost(){
- $kota_tujuan = $this->input->post('kota_tujuan');
- $qty         = $this->input->post('qty');
- $berat       = $this->input->post('berat');
- $kurir       = $this->input->post('kurir');
+$kota_tujuan = $this->input->post('kota_tujuan');
+$qty         = $this->input->post('qty');
+$berat       = $this->input->post('berat');
+$kurir       = $this->input->post('kurir');
 $api = $this->db->get('api_raja_ongkir')->row_array();
-
-
 $curl = curl_init();
-
 curl_setopt_array($curl, array(
-  CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => "",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => "POST",
-  CURLOPT_POSTFIELDS => "origin=155&destination=".$kota_tujuan."&weight=".$berat."&courier=".$kurir."",
-  CURLOPT_HTTPHEADER => array(
-    "content-type: application/x-www-form-urlencoded",
-    "key: ".$api['api_key'].""
-  ),
+CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
+CURLOPT_RETURNTRANSFER => true,
+CURLOPT_ENCODING => "",
+CURLOPT_MAXREDIRS => 10,
+CURLOPT_TIMEOUT => 30,
+CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+CURLOPT_CUSTOMREQUEST => "POST",
+CURLOPT_POSTFIELDS => "origin=155&destination=".$kota_tujuan."&weight=".$berat."&courier=".$kurir."",
+CURLOPT_HTTPHEADER => array(
+"content-type: application/x-www-form-urlencoded",
+"key: ".$api['api_key'].""
+),
 ));
 
 $response = curl_exec($curl);
@@ -277,10 +275,95 @@ echo "Estimasi ".$biaya['etd']." Hari";
 
 }
 }else{
-    
- echo "<H2 align='center'>TERDAPAT KESALAHAN PERHITUNGAN<H2>";   
+
+echo "<H2 align='center'>TERDAPAT KESALAHAN PERHITUNGAN<H2>";   
 }
 }
 
 }
+
+public function daftar_customer(){
+if($this->session->userdata('nama_customer') != ''){
+redirect(base_url());       
+}else{
+$this->load->view('umum/V_header_toko');
+$this->load->view('Store/V_daftar_customer');
+$this->load->view('umum/V_footer_toko');
 }
+}
+public function simpan_customer(){
+if($this->input->post('nama_customer')){
+$config = Array(
+'protocol' => 'smtp',
+'smtp_host' => 'ssl://smtp.googlemail.com',
+'smtp_port' => 465,
+'smtp_user' => 'dedyibrahym23@gmail.com',
+'smtp_pass' => 'terlalu123',
+'mailtype' => 'html',
+'charset' => 'iso-8859-1',
+'wordwrap' => TRUE
+);    
+$this->email->initialize($config);
+$this->load->library('email',$config);
+$this->email->set_newline("\r\n");
+$this->email->from('dedyibrahym23@gmail.com', 'Administrator');
+$this->email->to($this->input->post('email'));
+$this->email->subject('Konfirmasi akun');
+$data_kirim ="<h3>Terimakasih anda telah melakukan pendaftaran</h3><br>"
+        . "untuk mengkonfirmasi akun silahkan klik link di bawah ini <br><br>"
+        . "<a href='".base_url('Toko/konfirmasi_akun/'. base64_encode($this->input->post('email')))."'>Konfirmasi akun</a><br><br>"
+        . "atas perhatian dan kerjasamanya kami ucapkan terimaksih";
+$this->email->message($data_kirim);
+
+if (!$this->email->send()){    
+echo $this->email->print_debugger();
+}else{
+$data =array(
+'nama_customer' => $this->input->post('nama_customer'),
+'email'         => $this->input->post('email'),
+'password'      => md5($this->input->post('password')),
+);
+} 
+}    
+}
+
+public function login_customer(){
+
+if($this->input->post('email')){    
+$password = md5($this->input->post('password'));
+$email    = $this->input->post('email');        
+
+$data = $this->db->get_where('customer_toko',array('password'=>$password,'email'=>$email,'status'=>'terkonfirmasi'))->row_array();
+$cek_hasil = $this->db->get_where('customer_toko',array('password'=>$password,'email'=>$email,'status'=>'terkonfirmasi'))->num_rows();
+
+if($cek_hasil > 0){
+$set_sesi =array(
+'nama_customer' =>$data['nama_customer'],
+'email_customer'        =>$data['email'],
+);
+
+$this->session->set_userdata($set_sesi);
+
+
+echo"login_berhasil";
+}
+}
+}
+public function keluar(){
+$this->session->sess_destroy();
+}
+
+public function checkout(){
+
+if($this->session->userdata('nama_customer') !='' ){
+$this->load->view('umum/V_header_toko');
+$this->load->view('Store/V_checkout');
+$this->load->view('umum/V_footer_toko');
+}else{    
+redirect(base_url('Toko/daftar_customer'));    
+}
+
+
+}
+}
+

@@ -39,22 +39,27 @@ data-content="
 "
 
 ><span class="fa_toko fa-shopping-basket"></span></div></a>
-
+<?php if($this->session->userdata('nama_customer') !=''){ ?>
+<a href="#"><div class="popover-show-user navbar-brand_menu hidden-xs hidden-sm" title="<?php echo $this->session->userdata('nama_customer'); ?>"
+data-container="body" data-toggle="popover" data-placement="bottom"
+data-content="<h4 align='center'>Selamat datang</h4><hr><button class='btn col-md-12 btn-success' onclick='keluar()'>Keluar <span class='fa fa-sign-out'></span></button>"><span class="fa_toko fa-user"></span></div></a>
+<?php }else { ?>
+    
 <a href="#"><div class="popover-show-user navbar-brand_menu hidden-xs hidden-sm" title="Akun"
 data-container="body" data-toggle="popover" data-placement="bottom"
 data-content="
 <label>Email :</label>
-<input type='text' class='form-control' placeholder='Email ...'>
+<input type='text' id='email_masuk' value='' class='form-control' placeholder='Email ...'>
 
 <label>Password :</label>
-<input type='password' class='form-control' placeholder='Password ...'>
+<input type='password' id='password_masuk' value='' class='form-control' placeholder='Password ...'>
 <hr>
-<p align='center'><button class='btn btn-success'>Masuk <span class='fa fa-key'></span></button></p>
+<p align='center'><button onclick='masuk();' class='btn btn-success'>Masuk <span class='fa fa-key'></span></button></p>
 <hr>
 <h4 align='center'><a href='<?php echo base_url('Toko/daftar_customer') ?>'>Belum punnya akun ?</a> </h4>
-
-
 "><span class="fa_toko fa-user"></span></div></a>
+    
+<?php } ?>
 
 <a href="#"><div class="popover-show-list navbar-brand_menu hidden-xs hidden-sm" title="Menu"
 data-container="body" data-toggle="popover" data-placement="bottom"
@@ -75,7 +80,6 @@ data-content="Some content in Popover on bottom"><span class="fa_toko fa-list-al
 </ul>
 
 </div>
-
 </div>
 </div>    
 </nav>
@@ -155,6 +159,71 @@ $("#isi").show();
 
 
 </script>    
+<script type="text/javascript">
+function masuk(){
+var email_masuk    =$("#email_masuk").val();  
+var password_masuk =$("#password_masuk").val();
+
+$.ajax({
+
+type:"POST",
+url:"<?php echo base_url('Toko/login_customer') ?>",
+data:"email="+email_masuk+"&password="+password_masuk,
+success:function(data){
+
+if(data != 'login_berhasil'){
+swal({
+title:"", 
+text:"Login gagal",
+timer:1500,
+type:"error",
+showCancelButton :false,
+showConfirmButton :false
+});
+
+
+}else{
+
+swal({
+title:"", 
+text:"Login berhasil",
+timer:1500,
+type:"success",
+showCancelButton :false,
+showConfirmButton :false
+}, function(){
+      window.location.href = "<?php echo base_url(); ?>";
+});
+}
+}
+
+});
+
+}
+function keluar(){
+$.ajax({
+    type:"POST",
+    url:"<?php echo base_url('Toko/keluar') ?>",
+    data:"",
+    success:function(){
+   swal({
+title:"", 
+text:"Logout",
+timer:1500,
+type:"success",
+showCancelButton :false,
+showConfirmButton :false
+}, function(){
+      window.location.href = "<?php echo base_url(); ?>";
+});
+    
+    }   
+});
+    
+}
+
+</script>    
+
 
 <style>
 .fixed {
@@ -170,5 +239,4 @@ width: 100%;
 }
 </style>
 <div class="container" id="hasil_cari" style="background-color:#fff; margin-top:8%; display: none;"></div>
-
 <div id="isi">

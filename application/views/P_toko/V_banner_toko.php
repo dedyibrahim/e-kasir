@@ -35,24 +35,24 @@ $("#data_banner").html(html);
 });
 }
 
-function hapus_menu(id_menu,menu){
+function hapus_banner(id_banner){
 
 
 $.ajax({
 type:"POST",
-url:"<?php echo base_url('P_toko/hapus_menu') ?>",
-data:"id_menu="+id_menu,
+url:"<?php echo base_url('P_toko/hapus_banner') ?>",
+data:"id_banner="+id_banner,
 success:function(data){
 
 swal({
 title:"", 
-text:"Menu berhasil terhapus",
+text:"Banner terhapus",
 timer:1500,
 type:"success",
 showCancelButton :false,
 showConfirmButton :false
 });
-data_menu();
+data_banner();
 } 
 
 
