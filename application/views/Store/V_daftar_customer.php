@@ -13,6 +13,7 @@
 <input type="password" id="password2" class="form-control" placeholder="ulangi password">
 <div class="clearfix"></div><hr>
 <button class="btn btn-success pull-right col-md-4" id="daftar" >Daftar <span class="fa fa-save"></span></button>
+<a href="<?php echo base_url('Toko/login'); ?>"><button class="btn btn-success pull-left col-md-3" id="daftar" >Login <span class="fa fa-sign-in"></span></button></a>
 </div>
 </div>
 <script type="text/javascript">
@@ -39,14 +40,39 @@ type:"POST",
 url:"<?php echo base_url('Toko/simpan_customer') ?>",
 data:"nama_customer="+nama_customer+"&email="+email+"&password="+password1,
 success:function(data){
+if(data == 'udah_ada'){
 swal({
 title:"", 
-text:"Daftar berhasil silahkan cek email untuk melakukan konfirmasi akun",
+text:"Email tersebut telah terdaftar silahkan gunakan email lainnya.",
+timer:4000,
+type:"error",
+showCancelButton :false,
+showConfirmButton :false
+});
+$("#nama_customer").val("");
+$("#email").val("");
+$("#password1").val("");
+$("#password2").val("");
+    
+}else{
+
+swal({
+title:"", 
+text:"Pendaftaran berhasil silahkan cek email untuk melakukan konfirmasi akun",
 timer:3000,
 type:"success",
 showCancelButton :false,
 showConfirmButton :false
+}, function(){
+window.location.href = "<?php echo base_url('Toko/login'); ?>";
 });
+
+$("#nama_customer").val("");
+$("#email").val("");
+$("#password1").val("");
+$("#password2").val("");
+
+}
 }
 });    
 }else{

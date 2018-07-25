@@ -197,6 +197,37 @@ echo "<br>
 }
 
 }
+public function ambil_provinsi_ongkir(){
+$api = $this->db->get('api_raja_ongkir')->row_array();
+$curl = curl_init();
+curl_setopt_array($curl, array(
+CURLOPT_URL => "https://api.rajaongkir.com/starter/province",
+CURLOPT_RETURNTRANSFER => true,
+CURLOPT_ENCODING => "",
+CURLOPT_MAXREDIRS => 10,
+CURLOPT_TIMEOUT => 30,
+CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+CURLOPT_CUSTOMREQUEST => "GET",
+CURLOPT_HTTPHEADER => array(
+"key: ".$api['api_key'].""
+),
+));
+$responsekota = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);
+if ($err) {
+echo "cURL Error #:" . $err;
+} else {
+
+
+$data = json_decode($responsekota,true);
+
+foreach ($data['rajaongkir']['results'] as $berhasil) {
+echo "<option value=".$berhasil['province_id'].">".$berhasil['province']."</option>";
+}
+}
+
+}
 
 public function ambil_kota_ongkir(){
 $api = $this->db->get('api_raja_ongkir')->row_array();
@@ -226,8 +257,10 @@ $data = json_decode($responsekota,true);
 foreach ($data['rajaongkir']['results'] as $berhasil) {
 echo "<option value=".$berhasil['city_id'].">".$berhasil['city_name']."</option>";
 }
-}    
 }
+
+}
+
 public function load_data_cost(){
 $kota_tujuan = $this->input->post('kota_tujuan');
 $qty         = $this->input->post('qty');
@@ -292,6 +325,14 @@ $this->load->view('umum/V_footer_toko');
 }
 }
 public function simpan_customer(){
+$mailcek = $this->input->post('email');
+$cek_email = $this->db->get_where('customer_toko',array('email'=>$mailcek))->num_rows();
+    
+if($cek_email > 0){
+
+echo "udah_ada";
+    
+}else{    
 if($this->input->post('nama_customer')){
 $config = Array(
 'protocol' => 'smtp',
@@ -310,9 +351,9 @@ $this->email->from('dedyibrahym23@gmail.com', 'Administrator');
 $this->email->to($this->input->post('email'));
 $this->email->subject('Konfirmasi akun');
 $data_kirim ="<h3>Terimakasih anda telah melakukan pendaftaran</h3><br>"
-        . "untuk mengkonfirmasi akun silahkan klik link di bawah ini <br><br>"
-        . "<a href='".base_url('Toko/konfirmasi_akun/'. base64_encode($this->input->post('email')))."'>Konfirmasi akun</a><br><br>"
-        . "atas perhatian dan kerjasamanya kami ucapkan terimaksih";
+. "untuk mengkonfirmasi akun silahkan klik link di bawah ini <br><br>"
+. "<a href='".base_url('Toko/konfirmasi_akun/'. base64_encode($this->input->post('email')))."'>Konfirmasi akun anda disini</a><br><br>"
+. "atas perhatian dan kerjasamanya kami ucapkan terimaksih";
 $this->email->message($data_kirim);
 
 if (!$this->email->send()){    
@@ -323,8 +364,37 @@ $data =array(
 'email'         => $this->input->post('email'),
 'password'      => md5($this->input->post('password')),
 );
+
+$this->db->insert("customer_toko",$data);
+
 } 
+}
+
 }    
+}
+public function konfirmasi_akun(){
+
+$email = base64_decode($this->uri->segment(3));
+
+
+if($email !=''){
+
+$data= array(
+'status' => 'terkonfirmasi'
+);
+
+$this->db->update('customer_toko',$data,array('email'=>$email));
+redirect(base_url('Toko/login'));
+}else{
+redirect(base_url());   
+}
+
+
+}
+public function login(){
+$this->load->view('umum/V_header_toko');
+$this->load->view('Store/V_login');
+$this->load->view('umum/V_footer_toko');    
 }
 
 public function login_customer(){
@@ -338,7 +408,7 @@ $cek_hasil = $this->db->get_where('customer_toko',array('password'=>$password,'e
 
 if($cek_hasil > 0){
 $set_sesi =array(
-'nama_customer' =>$data['nama_customer'],
+'nama_customer'         =>$data['nama_customer'],
 'email_customer'        =>$data['email'],
 );
 
@@ -355,14 +425,20 @@ $this->session->sess_destroy();
 
 public function checkout(){
 
-if($this->session->userdata('nama_customer') !='' ){
+if(!$this->cart->contents()){
+redirect(base_url('Toko/lihat_keranjang'));    
+    
+    
+}else if($this->session->userdata('nama_customer') !='' ){
 $this->load->view('umum/V_header_toko');
 $this->load->view('Store/V_checkout');
 $this->load->view('umum/V_footer_toko');
 }else{    
-redirect(base_url('Toko/daftar_customer'));    
+redirect(base_url('Toko/login'));    
+}
 }
 
+public function simpan_alamat_customer(){
 
 }
 }
