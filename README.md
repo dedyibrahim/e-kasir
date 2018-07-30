@@ -18,12 +18,14 @@ Feature E-kasir / POS<br>
 4.Edit Pejualan superadmin.<br>
 5.Multi level login.<br>
 
+
 Feature Mangement stok <br>
 1.Mengetahui stok Habis, Mau habis dan sudah habis di  toko dan di pabrik.<br>
 2.Laporan stok Habis, Mau habis dan sudah habis di  toko dan di pabrik.<br>
 3.Edit produk toko dan pabrik jadi satu.<br>
 4.Stok toko dan pabrik di pisah.<br>
-5. Crud produk.<br>
+5.Crud produk.<br>
+6.Upload produk Menggunakan Excel <br>
 
 Feature Toko Online/ E-toko<br>
 1.Cukup Mobile responsive.<br>
