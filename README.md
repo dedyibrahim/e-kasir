@@ -37,4 +37,9 @@ Feature Toko Online/ E-toko<br>
 
 Minat Telp/WA 081289903664<br>
 
-Demo : http://bit.do/e-kasir<br>
+
+Demo  Dashbord: http://bit.do/e-kasir/P_login <br>
+email:admin@example.com
+password:admin
+
+Demo Toko http://bit.do/e-kasir
