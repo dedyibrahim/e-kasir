@@ -33,7 +33,7 @@ Feature Toko Online/ E-toko<br>
 2.Terintegrasi dengan E-kasir.<br>
 3.Terintegrasi dengan API RAJA ONGKIR.<br>
 4.Cek ketersediaan produk.<br>
-5.Multiple Upload produk.<br>
+5.Multiple Upload Foto produk.<br>
 
 
 Minat Telp/WA 081289903664<br>
