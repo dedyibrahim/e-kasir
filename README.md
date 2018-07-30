@@ -9,6 +9,7 @@ Material :<br>
 3.Ajax Jquery,<br>
 4.Bootstrap + Css Custom<br>
 5.HTML Custom<br>
+6.Sweetalert<br>
 
 
 Feature E-kasir / POS<br>
